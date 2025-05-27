@@ -6,7 +6,6 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  volumeMode: FileSystem
   resources:
     requests:
       storage: 1Gi
@@ -25,29 +24,29 @@ spec:
     metadata:
       labels:
         app: grafana
-  spec:
-    securityContext:
-      fsGroup: 472
-      supplementalGroups:
-        - 0
-    containers:
-      - name: grafana
-        image: grafana/grafana:latest
-        imagePullPolicy: IfNotPresent
-        ports:
+    spec:
+      securityContext:
+        fsGroup: 472
+        supplementalGroups:
+          - 0
+      containers:
+        - name: grafana
+          image: grafana/grafana:latest
+          imagePullPolicy: IfNotPresent
+          ports:
           - containerPort: 3000
             name: http-grafana
             protocol: TCP
-        readinessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /robots.txt
-              port: 3000
-              scheme: HTTP
-            initialDelaySeconds: 10
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 2
+          readinessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /robots.txt
+                port: 3000
+                scheme: HTTP
+              initialDelaySeconds: 10
+              periodSeconds: 30
+              successThreshold: 1
+              timeoutSeconds: 2
           livenessProbe:
             failureThreshold: 3
             initialDelaySeconds: 30
